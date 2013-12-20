@@ -18,8 +18,8 @@ set color
 set colorcat
 set autoexpand
 set complete=Enhance
-set path=(~/.cabal/bin ~/.local/bin ~/local/ohjelmat/{v2c} ~/local/bin /usr/local/kde4/{sbin,bin} /usr/local/{sbin,bin} /{sbin,bin} /usr/{sbin,bin} $path)
-set cdpath=(~/local/)
+set path=(~/.cabal/bin ~/.local/bin ~/huone/bin ~/local/bin /usr/local/kde4/{sbin,bin} /usr/local/{sbin,bin} /{sbin,bin} /usr/{sbin,bin} $path)
+set cdpath=(~/huone)
 set noclobber
 set notify
 set autorehash

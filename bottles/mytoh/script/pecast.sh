@@ -1,2 +1,2 @@
 #!/bin/sh
-exec mono --server ~/local/ohjelmat/peercaststation/PeerCastStation.exe
+exec mono --server ~/huone/ohjelmat/peercaststation/PeerCastStation.exe

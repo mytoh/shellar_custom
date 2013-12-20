@@ -35,7 +35,7 @@ session::daemon() {
     session="daemon"
     window="futaba"
 
-    tmux new-session -s ${session} -n ${window} -d 'cd local/kuvat/sivusto/futaba/b' \; set-window-option -q -t :0 remain-on-exit on
+    tmux new-session -s ${session} -n ${window} -d 'cd huone/kuvat/sivusto/futaba/b' \; set-window-option -q -t :0 remain-on-exit on
     tmux detach -s ${session}
 }
 
