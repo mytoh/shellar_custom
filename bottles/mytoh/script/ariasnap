@@ -224,8 +224,8 @@ parse_conffile() {
             if test -z "${_}"
             then
                 eval ${X}=$(grep "^${X}=" "${CONFFILE}" \
-                    | cut -f 2- -d '=' \
-                    | tail -1)
+                            | cut -f 2- -d '=' \
+                            | tail -1)
             fi
         done
 
@@ -258,7 +258,7 @@ default_params() {
     _FETCHPROGRAM="aria2c"
     _FETCHFLAGCONTINUE="-c"
     for X in QUIETREDIR QUIETFLAG STATSREDIR WORKDIR PORTSDIR   \
-        NDEBUG LOCALDESC FETCHPROGRAM FETCHFLAGCONTINUE; do
+                        NDEBUG LOCALDESC FETCHPROGRAM FETCHFLAGCONTINUE; do
         eval _=\$${X}
         eval __=\$_${X}
         if test -z "${_}"
@@ -284,42 +284,42 @@ fetch_check_params() {
     export HTTP_USER_AGENT="portsnap (${COMMAND}, $(uname -r))"
 
     _SERVERNAME_z=\
-"SERVERNAME must be given via command line or configuration file."
-_KEYPRINT_z="Key must be given via -k option or configuration file."
-_KEYPRINT_bad="Invalid key fingerprint: "
-_WORKDIR_bad="Directory does not exist or is not writable: "
+                 "SERVERNAME must be given via command line or configuration file."
+    _KEYPRINT_z="Key must be given via -k option or configuration file."
+    _KEYPRINT_bad="Invalid key fingerprint: "
+    _WORKDIR_bad="Directory does not exist or is not writable: "
 
-if test -z "${SERVERNAME}"
-then
-    echo -n "$(basename $0): "
-    echo "${_SERVERNAME_z}"
-    exit 1
-fi
-if test -z "${KEYPRINT}"
-then
-    echo -n "$(basename $0): "
-    echo "${_KEYPRINT_z}"
-    exit 1
-fi
-if ! echo "${KEYPRINT}" | grep -qE "^[0-9a-f]{64}$"
-then
-    echo -n "$(basename $0): "
-    echo -n "${_KEYPRINT_bad}"
-    echo ${KEYPRINT}
-    exit 1
-fi
-if ! test -d "${WORKDIR}" && test -w "${WORKDIR}"
-then
-    echo -n "$(basename $0): "
-    echo -n "${_WORKDIR_bad}"
-    echo ${WORKDIR}
-    exit 1
-fi
-cd ${WORKDIR} || exit 1
+    if test -z "${SERVERNAME}"
+    then
+        echo -n "$(basename $0): "
+        echo "${_SERVERNAME_z}"
+        exit 1
+    fi
+    if test -z "${KEYPRINT}"
+    then
+        echo -n "$(basename $0): "
+        echo "${_KEYPRINT_z}"
+        exit 1
+    fi
+    if ! echo "${KEYPRINT}" | grep -qE "^[0-9a-f]{64}$"
+    then
+        echo -n "$(basename $0): "
+        echo -n "${_KEYPRINT_bad}"
+        echo ${KEYPRINT}
+        exit 1
+    fi
+    if ! test -d "${WORKDIR}" && test -w "${WORKDIR}"
+    then
+        echo -n "$(basename $0): "
+        echo -n "${_WORKDIR_bad}"
+        echo ${WORKDIR}
+        exit 1
+    fi
+    cd ${WORKDIR} || exit 1
 
-BSPATCH=/usr/bin/bspatch
-SHA256=/sbin/sha256
-PHTTPGET=/usr/libexec/phttpget
+    BSPATCH=/usr/bin/bspatch
+    SHA256=/sbin/sha256
+    PHTTPGET=/usr/libexec/phttpget
 }
 
 # Perform sanity checks and set some final parameters
@@ -346,7 +346,7 @@ extract_check_params() {
     fi
 
     if ! test -d "${WORKDIR}/files" && test -r "${WORKDIR}/tag"     \
-        && test -r "${WORKDIR}/INDEX" && test -r "${WORKDIR}/tINDEX"
+       && test -r "${WORKDIR}/INDEX" && test -r "${WORKDIR}/tINDEX"
     then
         echo "No snapshot available.  Try running"
         echo "# $(basename $0) fetch"
@@ -424,8 +424,8 @@ fetch_pick_server_init() {
     if test -n "${HTTP_PROXY}${http_proxy}"
     then
         RANDVALUE=$(sha256 -qs "${HTTP_PROXY}${http_proxy}" \
-            | tr -d 'a-f' \
-            | cut -c 1-9)
+                    | tr -d 'a-f' \
+                    | cut -c 1-9)
     else
         RANDVALUE=$(jot -r 1 0 999999999)
     fi
@@ -435,7 +435,7 @@ fetch_pick_server_init() {
 fetch_pick_server() {
     # Generate a list of not-yet-tried mirrors
     sort serverlist_tried |
-    comm -23 serverlist_full - > serverlist
+        comm -23 serverlist_full - > serverlist
 
     # Have we run out of mirrors?
     if test $(wc -l < serverlist) -eq 0
@@ -510,7 +510,7 @@ fetch_key() {
     log_fetch "Fetching public key from ${SERVERNAME}... "
     rm -f pub.ssl
     ${FETCHPROGRAM} ${QUIETFLAG} http://${SERVERNAME}/pub.ssl \
-        2>${QUIETREDIR} || true
+                    2>${QUIETREDIR} || true
     if test ! -r pub.ssl
     then
         echo "failed."
@@ -536,7 +536,7 @@ fetch_tag() {
     printf "... "
 
     ${FETCHPROGRAM} ${QUIETFLAG} http://${SERVERNAME}/$1.ssl      \
-        2>${QUIETREDIR} || true
+                    2>${QUIETREDIR} || true
     if test ! -r ${1}.ssl
     then
         echo "failed."
@@ -544,11 +544,11 @@ fetch_tag() {
     fi
 
     openssl rsautl -pubin -inkey pub.ssl -verify        \
-        < $1.ssl > tag.new 2>${QUIETREDIR} || true
+            < $1.ssl > tag.new 2>${QUIETREDIR} || true
     rm $1.ssl
 
     if test ! $(wc -l < tag.new) = 1 ||
-        ! grep -qE "^portsnap\|[0-9]{10}\|[0-9a-f]{64}" tag.new
+       ! grep -qE "^portsnap\|[0-9]{10}\|[0-9a-f]{64}" tag.new
     then
         echo "invalid snapshot tag."
         return 1
@@ -623,7 +623,7 @@ fetch_metadata() {
     # echo ${NDEBUG} "Fetching snapshot metadata... "
     log_fetch_debug "Fetching snapshot metadata... "
     ${FETCHPROGRAM} ${QUIETFLAG} http://${SERVERNAME}/t/${SNAPSHOTHASH} \
-        2>${QUIETREDIR} || return
+                    2>${QUIETREDIR} || return
     if test "$(${SHA256} -q ${SNAPSHOTHASH})" != ${SNAPSHOTHASH}
     then
         echo "snapshot metadata corrupt."
@@ -661,12 +661,12 @@ fetch_make_patchlist() {
     local IFS='|'
     echo "" 1>${QUIETREDIR}
     grep -vE "^([0-9a-f]{64})\|\1$" |
-    while read X Y
-    do
-        printf "Processing: $X $Y ...\r" 1>${QUIETREDIR}
-        if test -f "files/${Y}.gz" || test ! -f "files/${X}.gz" ; then continue; fi
-        echo "${X}|${Y}"
-    done
+        while read X Y
+        do
+            printf "Processing: $X $Y ...\r" 1>${QUIETREDIR}
+            if test -f "files/${Y}.gz" || test ! -f "files/${X}.gz" ; then continue; fi
+            echo "${X}|${Y}"
+        done
     echo "" 1>${QUIETREDIR}
 }
 
@@ -715,7 +715,7 @@ fetch_progress_percent() {
 # Sanity-check an index file
 fetch_index_sanity() {
     if grep -qvE "^[-_+./@0-9A-Za-z]+\|[0-9a-f]{64}$" ${FILE_INDEX_NEW} ||
-        fgrep -q "./" ${FILE_INDEX_NEW}
+       fgrep -q "./" ${FILE_INDEX_NEW}
     then
         fetch_metadata_freakout
         return 1
@@ -832,7 +832,7 @@ fetch_update_fetch_ports_patches() {
     tr '|' '-' < ${FILE_PATCHLIST} \
         | lam -s "bp/" - \
         | xargs ${XARGST} ${PHTTPGET} ${SERVERNAME}   \
-        2>${STATSREDIR} \
+                2>${STATSREDIR} \
         | fetch_progress_percent ${patchcnt}
     echo "done."
 }
@@ -843,12 +843,12 @@ fetch_update_update_meadata_no_patches() {
     join -t '|' -v 2 tINDEX tINDEX.new \
         | cut -f 2 -d '|' /dev/stdin ${FILE_PATCHLIST} \
         | while read Y
-    do
-        if test ! -f "files/${Y}.gz"
-        then
-            echo ${Y};
-        fi
-    done > ${FILE_FILELIST}
+          do
+              if test ! -f "files/${Y}.gz"
+              then
+                  echo ${Y};
+              fi
+          done > ${FILE_FILELIST}
 }
 
 fetch_update_fetch_metadata_files() {
@@ -863,7 +863,7 @@ fetch_update_fetch_metadata_files() {
     log_message_debug "metadata files... "
     lam -s "f/" - -s ".gz" < ${FILE_FILELIST} \
         | xargs ${XARGST} ${PHTTPGET} ${SERVERNAME}   \
-        2>${QUIETREDIR}
+                2>${QUIETREDIR}
 
     while read Y
     do
@@ -931,7 +931,7 @@ fetch_update_fetch_metadata_patches() {
     tr '|' '-' < ${FILE_PATCHLIST} \
         | lam -s "tp/" - -s ".gz" \
         | xargs ${XARGST} ${PHTTPGET} ${SERVERNAME}   \
-        2>${STATSREDIR} \
+                2>${STATSREDIR} \
         | fetch_progress
     echo "done."
 }
@@ -944,12 +944,12 @@ fetch_update_fetch_new_ports_or_files() {
     join -t '|' -v 2 INDEX ${FILE_INDEX_NEW} \
         | cut -f 2 -d '|' /dev/stdin ${FILE_PATCHLIST} \
         | while read Y
-    do
-        if test ! -f "files/${Y}.gz"
-        then
-            echo ${Y};
-        fi
-    done > ${FILE_FILELIST}
+          do
+              if test ! -f "files/${Y}.gz"
+              then
+                  echo ${Y};
+              fi
+          done > ${FILE_FILELIST}
 
     filecnt="$(wc -l < ${FILE_FILELIST} | tr -d ' ')"
 
@@ -958,7 +958,7 @@ fetch_update_fetch_new_ports_or_files() {
     log_message_debug "new ports or files... "
     lam -s "f/" - -s ".gz" < ${FILE_FILELIST} \
         | xargs ${XARGST} ${PHTTPGET} ${SERVERNAME}   \
-        2>${QUIETREDIR}
+                2>${QUIETREDIR}
 
     I=0
     while read Y
@@ -996,7 +996,7 @@ fetch_update_refuse_index() {
     if test ! -z "${REFUSE}"
     then
         echo "Refusing to download updates for ${REFUSE}"   \
-            >${QUIETREDIR}
+             >${QUIETREDIR}
 
         grep -Ev "${REFUSE}" ${FILE_INDEX_NEW} > INDEX.tmp
         grep -E "${REFUSE}" INDEX \
@@ -1009,7 +1009,7 @@ fetch_update_extract_index() {
     # Extract the index
     log_message_nonl "Extracting index... " 1>${QUIETREDIR}
     gunzip -c files/$(look INDEX tINDEX.new \
-        | cut -f 2 -d '|').gz > ${FILE_INDEX_NEW}
+                      | cut -f 2 -d '|').gz > ${FILE_INDEX_NEW}
     fetch_index_sanity || return 1
 }
 
@@ -1090,8 +1090,8 @@ extract_make_index() {
     else
         gunzip -c "${WORKDIR}/files/$(look $1 ${WORKDIR}/tINDEX \
 | cut -f 2 -d '|').gz" \
-            | cat - ${LOCALDESC} \
-            |  ${MKINDEX} /dev/stdin > ${PORTSDIR}/$2
+        | cat - ${LOCALDESC} \
+        |  ${MKINDEX} /dev/stdin > ${PORTSDIR}/$2
     fi
 }
 
@@ -1116,15 +1116,15 @@ extract_metadata() {
     elif test -f ${PORTSDIR}/.portsnap.INDEX
     then
         grep -E "${REFUSE}" ${PORTSDIR}/.portsnap.INDEX     \
-            > ${PORTSDIR}/.portsnap.INDEX.tmp
+             > ${PORTSDIR}/.portsnap.INDEX.tmp
         grep -vE "${REFUSE}" ${WORKDIR}/INDEX \
             | sort \
             | sort -m - ${PORTSDIR}/.portsnap.INDEX.tmp   \
-            > ${PORTSDIR}/.portsnap.INDEX
+                   > ${PORTSDIR}/.portsnap.INDEX
         rm -f ${PORTSDIR}/.portsnap.INDEX.tmp
     else
         grep -vE "${REFUSE}" ${WORKDIR}/INDEX | sort \
-            > ${PORTSDIR}/.portsnap.INDEX
+                                                    > ${PORTSDIR}/.portsnap.INDEX
     fi
 }
 
@@ -1134,37 +1134,37 @@ extract_run() {
     mkdir -p ${PORTSDIR} || return 1
 
     if !
-        if test ! -z "${EXTRACTPATH}"
-        then
-            grep "^${EXTRACTPATH}" ${WORKDIR}/INDEX
-        elif test ! -z "${REFUSE}"
-        then
-            grep -vE "${REFUSE}" ${WORKDIR}/INDEX
-        else
-            cat ${WORKDIR}/INDEX
-        fi \
-            | while read FILE HASH
-        do
-            echo ${PORTSDIR}/${FILE}
-            if ! test -s "${WORKDIR}/files/${HASH}.gz"
-            then
-                echo "files/${HASH}.gz not found -- snapshot corrupt."
-                return 1
-            fi
-            case ${FILE} in
-                */)
-                    rm -rf ${PORTSDIR}/${FILE%/}
-                    mkdir -p ${PORTSDIR}/${FILE}
-                    tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
-                        -C ${PORTSDIR}/${FILE}
-                    ;;
-                *)
-                    rm -f ${PORTSDIR}/${FILE}
-                    tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
-                        -C ${PORTSDIR} ${FILE}
-                    ;;
-            esac
-        done
+       if test ! -z "${EXTRACTPATH}"
+       then
+           grep "^${EXTRACTPATH}" ${WORKDIR}/INDEX
+       elif test ! -z "${REFUSE}"
+       then
+           grep -vE "${REFUSE}" ${WORKDIR}/INDEX
+       else
+           cat ${WORKDIR}/INDEX
+       fi \
+           | while read FILE HASH
+             do
+                 echo ${PORTSDIR}/${FILE}
+                 if ! test -s "${WORKDIR}/files/${HASH}.gz"
+                 then
+                     echo "files/${HASH}.gz not found -- snapshot corrupt."
+                     return 1
+                 fi
+                 case ${FILE} in
+                     */)
+                         rm -rf ${PORTSDIR}/${FILE%/}
+                         mkdir -p ${PORTSDIR}/${FILE}
+                         tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
+                             -C ${PORTSDIR}/${FILE}
+                         ;;
+                     *)
+                         rm -f ${PORTSDIR}/${FILE}
+                         tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
+                             -C ${PORTSDIR} ${FILE}
+                         ;;
+                 esac
+             done
     then
         return 1
     fi
@@ -1212,33 +1212,33 @@ update_run_extract() {
     # Install new files
     echo "Extracting new files:"
     if !
-        if ! test -z "${REFUSE}"
-        then
-            grep -vE "${REFUSE}" ${WORKDIR}/INDEX | sort
-        else
-            sort ${WORKDIR}/INDEX
-        fi \
-            | comm -13 ${PORTSDIR}/.portsnap.INDEX - \
-            | while read FILE HASH
-        do
-            log_new_ports ${PORTSDIR}/${FILE}
-            if ! test -s "${WORKDIR}/files/${HASH}.gz"
-            then
-                echo "files/${HASH}.gz not found -- snapshot corrupt."
-                return 1
-            fi
-            case ${FILE} in
-                */)
-                    mkdir -p ${PORTSDIR}/${FILE}
-                    tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
-                        -C ${PORTSDIR}/${FILE}
-                    ;;
-                *)
-                    tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
-                        -C ${PORTSDIR} ${FILE}
-                    ;;
-            esac
-        done
+       if ! test -z "${REFUSE}"
+       then
+           grep -vE "${REFUSE}" ${WORKDIR}/INDEX | sort
+       else
+           sort ${WORKDIR}/INDEX
+       fi \
+           | comm -13 ${PORTSDIR}/.portsnap.INDEX - \
+           | while read FILE HASH
+             do
+                 log_new_ports ${FILE}
+                 if ! test -s "${WORKDIR}/files/${HASH}.gz"
+                 then
+                     echo "files/${HASH}.gz not found -- snapshot corrupt."
+                     return 1
+                 fi
+                 case ${FILE} in
+                     */)
+                         mkdir -p ${PORTSDIR}/${FILE}
+                         tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
+                             -C ${PORTSDIR}/${FILE}
+                         ;;
+                     *)
+                         tar -xz --numeric-owner -f ${WORKDIR}/files/${HASH}.gz \
+                             -C ${PORTSDIR} ${FILE}
+                         ;;
+                 esac
+             done
     then
         return 1
     fi
@@ -1254,7 +1254,7 @@ update_run() {
     fi
 
     if sort ${WORKDIR}/INDEX \
-        | cmp -s ${PORTSDIR}/.portsnap.INDEX -
+       | cmp -s ${PORTSDIR}/.portsnap.INDEX -
     then
         log_message "Ports tree is already up to date."
         return 0
