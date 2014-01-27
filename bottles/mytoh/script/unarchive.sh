@@ -20,6 +20,14 @@ unarchive() {
                 unarchive::untar "${file}" ;;
             *.tar.xz)
                 unarchive::untar "${file}" ;;
+            *.tar)
+                unarchive::untar "${file}" ;;
+            *.tbz2)
+                unarchive::untar "${file}" ;;
+            *.tgz)
+                unarchive::untar "${file}" ;;
+            *.txz)
+                unarchive::untar "${file}" ;;
             *.xz)
                 unxz "${file}";;
             *.bz2)
@@ -28,12 +36,6 @@ unarchive() {
                 unrar x "${file}" ;;
             *.gz)
                 gunzip "${file}" ;;
-            *.tar)
-                unarchive::untar "${file}" ;;
-            *.tbz2)
-                unarchive::untar "${file}" ;;
-            *.tgz)
-                unarchive::untar "${file}" ;;
             *.zip)
                 unzip "${file}" ;;
             *.Z)
