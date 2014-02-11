@@ -5,4 +5,5 @@ bindkey '' history-search-backward
 bindkey '' history-search-forward
 bindkey '' backward-delete-word
 bindkey "^R" i-search-back
+bindkey "^X^C" list-or-eof
 

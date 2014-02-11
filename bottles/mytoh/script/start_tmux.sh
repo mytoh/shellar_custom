@@ -7,7 +7,7 @@ attach() {
     local session
     session="${1}"
 
-    tmux attach -t ${session}
+    tmux -2 attach -t ${session}
 }
 
 session::main() {
