@@ -12,10 +12,10 @@ main() {
       vcodec="libvpx"
       strict="-strict -2"
       echo "convert start"
-      ffmpeg -i "${in}" ${strict} -c:v ${vcodec} \
+      ffmpeg -i "${in}" ${strict} -vcodec ${vcodec} \
              -qmin ${qmin} -qmax ${qmax} \
              -quality ${quality} -crf 5 \
-             -b:v ${bitrate} -c:a ${acodec} \
+             -b:v ${bitrate} -acodec ${acodec} \
              "${out}"
       echo "${out}"
       echo "convert finish"
