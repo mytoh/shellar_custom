@@ -9,6 +9,7 @@ optimage::help() {
 
 optimage::png() {
     optipng "${1}"
+    advpng -z -4 -i 15 "${1}"
 }
 
 optimage::jpeg() {
