@@ -17,7 +17,7 @@ optimage::jpeg() {
     file="${1}"
     opted="${file}.optimized"
     echo "${file}"
-    jpegtran "${file}" -outfile "${opted}"
+    jpegtran -optimise -progressive -outfile "${opted}" "${file}"
     rm "${file}"
     mv "${opted}" "${file}"
 
