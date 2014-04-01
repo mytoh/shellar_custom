@@ -10,11 +10,13 @@ main() {
       qmax=50
       acodec="libopus"
       vcodec="libvpx"
+      vf="colormatrix=bt709:bt601" # video filter
       strict="-strict -2"
       echo "convert start"
       ffmpeg -i "${in}" ${strict} -vcodec ${vcodec} \
              -qmin ${qmin} -qmax ${qmax} \
              -quality ${quality} -crf 5 \
+             -vf ${vf} -sn \
              -b:v ${bitrate} -acodec ${acodec} \
              "${out}"
       echo "${out}"

@@ -11,7 +11,8 @@ if ( -d ~/.tcsh.d ) then
 setenv NLSPATH ~/.tcsh.d/%N
 endif
 setenv RLWRAP_HOME ~/.rlwrap
-
+setenv XDG_CACHE_HOME ~/.cache
+    
 ## java
 #setenv CLASSPATH /usr/local/share/java/rhino
 setenv _JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on'

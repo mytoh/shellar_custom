@@ -15,6 +15,7 @@ alias clip-mkdir 'clip-base | xargs mkdir -v -p'
 alias clip-mpv ' mpv "`clip`" '
 alias clip 'xclip -o'
 alias k 'killall -9'
+alias up 'cd ../'
 
 if (-X dfc) then
     alias df 'dfc'
