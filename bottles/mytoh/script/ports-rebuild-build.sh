@@ -7,14 +7,14 @@ rebuild_all() {
     local depends="$(make -C ${dir} build-depends-list)"
     for p in ${depends}
     do
-        sudo make -C ${p} reinstall clean
+        sudo make -C ${p} reinstall clean distclean
     done
 }
 
 rebuild_one() {
     local dir="/usr/ports/${1}"
 
-    sudo make -C ${dir} clean reinstall clean
+    sudo make -C ${dir} clean reinstall clean distclean
 }
 
 main() {
