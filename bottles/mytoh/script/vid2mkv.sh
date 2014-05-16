@@ -22,12 +22,12 @@ convert() {
     local _orig _temp
     _orig="${1}"
     _temp="temp_${_orig%.*}.mkv" # remove extension
+    _new="new_${_orig%.*}.mkv"
 
     log "converting ${1}"
 
     mkvmerge -o "${_temp}" "${_orig}" && \
-        remove "${_orig}" && \
-        move "${_temp}" "${_orig%.*}.mkv"
+    move "${_temp}" "${_new%.*}.mkv"
 }
 
 remove() {
@@ -59,7 +59,7 @@ main() {
 
 notify() {
     local desc="${1}"
-    notify-send -a test -t 6000 -i /usr/local/share/icons/elementary/devices/128/media-optical.svg desc
+    notify-send -a test -t 6000 -i /usr/local/share/icons/elementary/devices/128/media-optical.svg vid2mkv.sh
 }
 
 main "${1}"
