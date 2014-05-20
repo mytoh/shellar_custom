@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
 xulrunner ~/huone/git/conkeror/application.ini $@
+killall xulrunner
+killall npviewer.bin
