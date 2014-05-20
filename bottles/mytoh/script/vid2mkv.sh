@@ -18,7 +18,7 @@ EOF
 }
 
 
-convert() {
+mkv_to_mkv() {
     local _orig _temp
     _orig="${1}"
     _temp="temp_${_orig%.*}.mkv" # remove extension
@@ -28,6 +28,21 @@ convert() {
 
     mkvmerge -o "${_temp}" "${_orig}" && \
     move "${_temp}" "${_new%.*}.mkv"
+}
+
+vid_to_mkv() {
+    local _orig _temp
+    _orig="${1}"
+    _temp="temp_${_orig%.*}.mkv" # remove extension
+    _temp2="temp_${_temp}"
+    _new="new_${_orig%.*}.mkv"
+
+    log "converting ${1}"
+
+    ffmpeg -i  "${_orig}" -codec:v copy -codec:a copy  "${_temp}" && \
+    mkvmerge -o "${_temp2}" "${_temp}"  && \
+    remove "${_temp}"  && \
+    move "${_temp2}" "${_new}"
 }
 
 remove() {
@@ -47,15 +62,33 @@ move() {
     mv -v "${_temp}" "${_orig}"
 }
 
+file_is_mkv() {
+    local _ext
+    _ext="${1##*.}"
+    if test ${_ext} == "mkv"
+    then
+        true
+    else
+        false
+    fi
+}
+
 main() {
     if test -f "${1}"
     then
-        convert "${1}"
-        notify "conversion of ${1} finished"
+        if file_is_mkv "${1}"
+        then
+            mkv_to_mkv "${1}"
+            notify "conversion of ${1} finished"
+        else
+            vid_to_mkv "${1}"
+            notify "conversion of ${1} finished"
+        fi
     else
         log "${1} doesn't exist!"
     fi
 }
+
 
 notify() {
     local desc="${1}"
