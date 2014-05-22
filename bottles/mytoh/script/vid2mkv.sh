@@ -95,4 +95,4 @@ notify() {
     notify-send -a test -t 6000 -i /usr/local/share/icons/elementary/devices/128/media-optical.svg vid2mkv.sh
 }
 
-main "${1}"
+main "${@}"
