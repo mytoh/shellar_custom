@@ -22,7 +22,7 @@ rebuild_all_deps() {
     done
 }
 
-rebuild_build_all() {
+rebuild_build_deps() {
     local dir="/usr/ports/${1}"
     local depends="$(make -C ${dir} build-depends-list)"
     for p in ${depends}
