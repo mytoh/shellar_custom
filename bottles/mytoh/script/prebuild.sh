@@ -1,12 +1,16 @@
+
 #!/bin/sh
 
 set -o nounset
 set -o errexit
 
+readonly ARGS="${@}"
 
 rebuild_run_deps() {
-    local dir="/usr/ports/${1}"
-    local depends="$(make -C ${dir} run-depends-list)"
+    local dir depends p
+    dir="/usr/ports/${1}"
+    depends="$(make -C ${dir} run-depends-list)"
+
     for p in ${depends}
     do
         sudo make -s -C ${p} clean reinstall clean distclean
@@ -14,8 +18,10 @@ rebuild_run_deps() {
 }
 
 rebuild_all_deps() {
-    local dir="/usr/ports/${1}"
-    local depends="$(make -C ${dir} all-depends-list)"
+    local dir depends p
+    dir="/usr/ports/${1}"
+    depends="$(make -C ${dir} all-depends-list)"
+
     for p in ${depends}
     do
         sudo make -s -C ${p} reinstall clean distclean
@@ -23,8 +29,10 @@ rebuild_all_deps() {
 }
 
 rebuild_build_deps() {
-    local dir="/usr/ports/${1}"
-    local depends="$(make -C ${dir} build-depends-list)"
+    local dir depends p
+    dir="/usr/ports/${1}"
+    depends="$(make -C ${dir} build-depends-list)"
+
     for p in ${depends}
     do
         sudo make -C ${p} reinstall clean distclean
@@ -51,8 +59,9 @@ main() {
         all)
             rebuild_all_deps "${target}"
             rebuild_one "${target}" ;;
-        *) echo no such command ;;
+        one)
+            rebuild_one "${target}" ;;
     esac
 }
 
-main "${@}"
+main "${ARGS}"
