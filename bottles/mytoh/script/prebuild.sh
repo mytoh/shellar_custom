@@ -1,10 +1,7 @@
-
 #!/bin/sh
 
 set -o nounset
 set -o errexit
-
-readonly ARGS="${@}"
 
 rebuild_run_deps() {
     local dir depends p
@@ -35,7 +32,7 @@ rebuild_build_deps() {
 
     for p in ${depends}
     do
-        sudo make -C ${p} reinstall clean distclean
+        sudo make -s -C ${p} reinstall clean distclean
     done
 }
 
@@ -64,4 +61,4 @@ main() {
     esac
 }
 
-main "${ARGS}"
+main "$@"
