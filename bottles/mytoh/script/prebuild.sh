@@ -3,6 +3,9 @@
 set -o nounset
 set -o errexit
 
+ARGS="${@}"
+readonly ARGS
+
 rebuild_run_deps() {
     local dir depends p
     dir="/usr/ports/${1}"
@@ -61,4 +64,4 @@ main() {
     esac
 }
 
-main "$@"
+main ${ARGS}
