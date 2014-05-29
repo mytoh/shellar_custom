@@ -1,5 +1,8 @@
 #!/bin/sh
 
+ARGS="${@}"
+readonly ARGS
+
 archive::tar_xz() {
     local out orig
     out="${1}.tar.xz"
@@ -78,4 +81,4 @@ archive::main() {
     fi
 }
 
-archive::main "${1}" "${2}"
+archive::main ${ARGS}
