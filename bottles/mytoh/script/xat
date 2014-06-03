@@ -63,7 +63,7 @@ rm_attr() {
     local name="${1}"
     local file="${2}"
 
-    ${RMEXTATTR}  ${name}  "${file}"
+    ${RMEXTATTR}  "${name}"  "${file}"
 }
 
 usage() {
@@ -90,13 +90,17 @@ main() {
     else
         case ${command} in
             get)
-                get_attr "${@}" ;;
+                get_attr "${@}"
+                ;;
             set)
-                set_attr "${@}" ;;
+                set_attr "${@}"
+                ;;
             ls)
-                ls_attr "${@}";;
+                ls_attr "${@}"
+                ;;
             rm)
-                rm_attr "${@}";;
+                rm_attr "${@}"
+                ;;
         esac
     fi
 }
