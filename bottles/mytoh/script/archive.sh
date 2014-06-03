@@ -47,7 +47,7 @@ archive::rar() {
 }
 
 
-archive::main() {
+main() {
     local atype dir
     atype="${1}"
     dir="${2}"
@@ -56,23 +56,32 @@ archive::main() {
     then
         case "${atype}" in
             tar.bz2)
-                archive::tar_bz2 "${dir}" ;;
+                archive::tar_bz2 "${dir}"
+                ;;
             tbz2)
-                archive::tar_bz2 "${dir}" ;;
+                archive::tar_bz2 "${dir}"
+                ;;
             tar.gz)
-                archive::tar_gz "${dir}" ;;
+                archive::tar_gz "${dir}"
+                ;;
             tgz)
-                archive::tar_gz "${dir}" ;;
+                archive::tar_gz "${dir}"
+                ;;
             tar.xz)
-                archive::tar_xz "${dir}" ;;
+                archive::tar_xz "${dir}"
+                ;;
             txz)
-                archive::tar_xz "${dir}" ;;
+                archive::tar_xz "${dir}"
+                ;;
             tar)
-                archive::tar "${dir}" ;;
+                archive::tar "${dir}"
+                ;;
             rar)
-                archive::rar "${dir}" ;;
+                archive::rar "${dir}"
+                ;;
             7z)
-                archive::7z "${dir}" ;;
+                archive::7z "${dir}"
+                ;;
             *)
                 echo "'${dir}' cannot be extracted !"
         esac
@@ -81,4 +90,4 @@ archive::main() {
     fi
 }
 
-archive::main ${ARGS}
+main ${ARGS}
