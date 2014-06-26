@@ -49,6 +49,16 @@ session::stats() {
     tmux detach -s ${session}
 }
 
+session::jail() {
+    local session
+    local window
+    session="jail"
+    window="jail"
+
+    tmux new-session -s ${session} -n ${window} -d 'mosh peca@192.168.1.21' \; set-window-option -q -t :0 remain-on-exit on
+    tmux detach -s ${session}
+}
+
 
 main() {
 

@@ -3,6 +3,11 @@
 set -o errexit
 set -o nounset
 
+ARGS="${@}"
+readonly ARGS
+PROGNAME="$(basename $0)"
+readonly PROGNAME
+
 log()
 {
     local message="${1}"
@@ -21,7 +26,7 @@ EOF
 mkv_to_mkv() {
     local _orig _temp
     _orig="${1}"
-    _temp="temp_${_orig%.*}.mkv" # remove extension
+    _temp="$(mktemp -t ${PROGNAME})"
     _new="new_${_orig%.*}.mkv"
 
     log "converting ${1}"

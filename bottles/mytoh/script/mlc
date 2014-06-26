@@ -1,0 +1,14 @@
+#!/bin/sh
+# mlclient "$@" 2>/dev/null || mlterm -j genuine "$@" # genuineモードで使用
+#mlclient 2>/dev/null || mlterm --daemon=blend "$@"  # blendモードで使用する場合
+
+main() {
+    local mode
+    mode=blend
+    if ! $(mlclient 2>/dev/null)
+    then
+        mlterm --daemon=${mode}
+    fi
+}
+
+main

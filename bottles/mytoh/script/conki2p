@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# conkeror -P i2p -q -batch -e "user_pref('conkeror.rcfile', '/home/foo/.conkerorrc.i2p');"
+conkeror -no-remote -P i2p 
+

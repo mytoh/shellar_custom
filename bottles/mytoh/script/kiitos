@@ -1,0 +1,22 @@
+#!/bin/sh
+
+ARGS="${@}"
+readonly ARGS
+
+require_please() {
+    which -s "please"
+}
+
+main() {
+
+    if test $(require_please)
+    then
+        echo please
+        please ${ARGS}
+    else
+        sudo ${ARGS}
+    fi
+
+}
+
+main ${ARGS}

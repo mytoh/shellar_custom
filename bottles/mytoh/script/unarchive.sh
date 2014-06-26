@@ -1,5 +1,8 @@
 #!/bin/sh
 
+ARGS="${@}"
+readonly ARGS
+
 unarchive::untar() {
     local file
     file="${1}"
@@ -7,7 +10,7 @@ unarchive::untar() {
     tar xvf "${file}"
 }
 
-unarchive() {
+main() {
     local file
     file="${1}"
 
@@ -15,33 +18,47 @@ unarchive() {
     then
         case "${file}" in
             *.tar.bz2)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.tar.gz)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.tar.xz)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.tar)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.tbz2)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.tgz)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.txz)
-                unarchive::untar "${file}" ;;
+                unarchive::untar "${file}"
+                ;;
             *.xz)
-                unxz "${file}";;
+                unxz "${file}"
+                ;;
             *.bz2)
-                bunzip2 "${file}";;
+                bunzip2 "${file}"
+                ;;
             *.rar)
-                unrar x "${file}" ;;
+                unrar x "${file}"
+                ;;
             *.gz)
-                gunzip "${file}" ;;
+                gunzip "${file}"
+                ;;
             *.zip)
-                unzip "${file}" ;;
+                unzip "${file}"
+                ;;
             *.Z)
-                uncompress "${file}" ;;
+                uncompress "${file}"
+                ;;
             *.7z)
-                7z x "${file}" ;;
+                7z x "${file}"
+                ;;
             *)
                 echo "'${file}' cannot be extracted !"
         esac
@@ -50,4 +67,4 @@ unarchive() {
     fi
 }
 
-unarchive "${1}"
+main ${ARGS}

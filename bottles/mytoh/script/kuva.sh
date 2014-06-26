@@ -3,6 +3,8 @@
 set -o errexit
 set -o nounset
 
+ARGS="${@}"
+readonly ARGS
 
 open_file() {
     local dir
@@ -29,4 +31,4 @@ main() {
     fi
 }
 
-main "${@}"
+main ${ARGS}
