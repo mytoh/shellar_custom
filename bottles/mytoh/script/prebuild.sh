@@ -16,14 +16,14 @@ rebuild_run_deps() {
 
         for p in ${depends}
         do
-            sudo make -s -C ${p} clean reinstall clean distclean
+            command sudo make -s -C ${p} clean reinstall clean distclean
         done
     else
         depends="$(make run-depends-list)"
 
         for p in ${depends}
         do
-            sudo make -s -C ${p} clean reinstall clean distclean
+            command sudo make -s -C ${p} clean reinstall clean distclean
         done
     fi
 }
@@ -38,14 +38,14 @@ rebuild_all_deps() {
 
         for p in ${depends}
         do
-            sudo make -s -C ${p} reinstall clean distclean
+            command  make -s -C ${p} reinstall clean distclean
         done
     else
         depends="$(make all-depends-list)"
 
         for p in ${depends}
         do
-            sudo make -s -C ${p} reinstall clean distclean
+            command make -s -C ${p} reinstall clean distclean
         done
 
     fi
@@ -61,14 +61,14 @@ rebuild_build_deps() {
 
         for p in ${depends}
         do
-            sudo make -s -C ${p} reinstall clean distclean
+            command sudo make -s -C ${p} reinstall clean distclean
         done
     else
         depends="$(make build-depends-list)"
 
         for p in ${depends}
         do
-            sudo make -s -C ${p} reinstall clean distclean
+            command sudo make -s -C ${p} reinstall clean distclean
         done
     fi
 
@@ -80,9 +80,9 @@ rebuild_one() {
     then
         dir="/usr/ports/${1}"
 
-        sudo make -s -C ${dir} clean reinstall clean distclean
+        command sudo make -s -C ${dir} clean reinstall clean distclean
     else
-        sudo make -s clean reinstall clean distclean
+        command sudo make -s clean reinstall clean distclean
     fi
 }
 

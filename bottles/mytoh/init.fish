@@ -3,7 +3,7 @@
 
 ulimit -c 0
 
-shellar.register_paths {$HOME}/local
+shellar.register_paths {$HOME}/huone
 shellar.push_to_path {$HOME}/.bin
 shellar.register_paths {$HOME}/.config/fish
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 
-env MOZ_DISABLE_OOP_PLUGINS=1 xulrunner ~/huone/git/conkeror/application.ini $@
-killall xulrunner
+env MOZ_DISABLE_OOP_PLUGINS=1 xulrunner ~/huone/ohjelmat/conkeror/application.ini $@
 killall npviewer.bin

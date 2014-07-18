@@ -67,4 +67,4 @@ main() {
     fi
 }
 
-main ${ARGS}
+main "${ARGS}"

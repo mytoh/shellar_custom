@@ -4,7 +4,7 @@ ARGS="${@}"
 readonly ARGS
 
 require_please() {
-    which -s "please"
+    command which -s "please"
 }
 
 main() {
@@ -12,9 +12,9 @@ main() {
     if test $(require_please)
     then
         echo please
-        please ${ARGS}
+        command please ${ARGS}
     else
-        sudo ${ARGS}
+        command sudo ${ARGS}
     fi
 
 }

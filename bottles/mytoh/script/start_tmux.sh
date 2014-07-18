@@ -7,7 +7,7 @@ attach() {
     local session
     session="${1}"
 
-    tmux -2 attach -t ${session}
+    command tmux -2 attach -t ${session}
 }
 
 session::main() {
@@ -16,7 +16,7 @@ session::main() {
     session="main"
     window="main"
 
-    tmux new-session -s ${session} -n ${window} -d
+    command tmux new-session -s ${session} -n ${window} -d
 }
 
 session::remote() {
@@ -25,8 +25,8 @@ session::remote() {
     session="remote"
     window="sdf"
 
-    tmux new-session -s ${session} -n ${window} -d 'dbclient -K 30 sdf.org' \; set-window-option -q -t :0 remain-on-exit on
-    tmux detach -s ${session}
+    command tmux new-session -s ${session} -n ${window} -d 'dbclient -K 30 sdf.org' \; set-window-option -q -t :0 remain-on-exit on
+    command tmux detach -s ${session}
 }
 
 session::daemon() {
@@ -35,8 +35,8 @@ session::daemon() {
     session="daemon"
     window="futaba"
 
-    tmux new-session -s ${session} -n ${window} -d 'cd huone/kuvat/sivusto/futaba/b' \; set-window-option -q -t :0 remain-on-exit on
-    tmux detach -s ${session}
+    command tmux new-session -s ${session} -n ${window} -d 'cd huone/kuvat/sivusto/futaba/b' \; set-window-option -q -t :0 remain-on-exit on
+    command tmux detach -s ${session}
 }
 
 session::stats() {
@@ -45,8 +45,8 @@ session::stats() {
     session="stats"
     window="top"
 
-    tmux new-session -s ${session} -n ${window} -d 'top' \; set-window-option -q -t :0 remain-on-exit on
-    tmux detach -s ${session}
+    command tmux new-session -s ${session} -n ${window} -d 'top' \; set-window-option -q -t :0 remain-on-exit on
+    command tmux detach -s ${session}
 }
 
 session::jail() {
@@ -55,8 +55,8 @@ session::jail() {
     session="jail"
     window="jail"
 
-    tmux new-session -s ${session} -n ${window} -d 'mosh peca@192.168.1.21' \; set-window-option -q -t :0 remain-on-exit on
-    tmux detach -s ${session}
+    command tmux new-session -s ${session} -n ${window} -d 'mosh peca@192.168.1.21' \; set-window-option -q -t :0 remain-on-exit on
+    command tmux detach -s ${session}
 }
 
 
