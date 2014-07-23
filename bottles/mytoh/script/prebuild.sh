@@ -1,11 +1,15 @@
 #!/bin/sh
 
-set -o errexit
+# set -o errexit
 
 ARGS="${@}"
 readonly ARGS
 NARGS="${#}"
 readonly NARGS
+
+command_make() {
+    command sudo make -s ${@}
+}
 
 rebuild_run_deps() {
     local dir depends p
@@ -16,14 +20,14 @@ rebuild_run_deps() {
 
         for p in ${depends}
         do
-            command sudo make -s -C ${p} clean reinstall clean distclean
+            command_make  -C ${p} clean reinstall clean distclean
         done
     else
         depends="$(make run-depends-list)"
 
         for p in ${depends}
         do
-            command sudo make -s -C ${p} clean reinstall clean distclean
+            command_make  -C ${p} clean reinstall clean distclean
         done
     fi
 }
@@ -38,14 +42,14 @@ rebuild_all_deps() {
 
         for p in ${depends}
         do
-            command  make -s -C ${p} reinstall clean distclean
+            command_make -C ${p} reinstall clean distclean
         done
     else
         depends="$(make all-depends-list)"
 
         for p in ${depends}
         do
-            command make -s -C ${p} reinstall clean distclean
+            command_make -C ${p} reinstall clean distclean
         done
 
     fi
@@ -61,14 +65,14 @@ rebuild_build_deps() {
 
         for p in ${depends}
         do
-            command sudo make -s -C ${p} reinstall clean distclean
+            command_make  -C ${p} reinstall clean distclean
         done
     else
         depends="$(make build-depends-list)"
 
         for p in ${depends}
         do
-            command sudo make -s -C ${p} reinstall clean distclean
+            command_make  -C ${p} reinstall clean distclean
         done
     fi
 
@@ -80,9 +84,9 @@ rebuild_one() {
     then
         dir="/usr/ports/${1}"
 
-        command sudo make -s -C ${dir} clean reinstall clean distclean
+        command_make  -C ${dir} clean reinstall clean distclean
     else
-        command sudo make -s clean reinstall clean distclean
+        command_make clean reinstall clean distclean
     fi
 }
 
