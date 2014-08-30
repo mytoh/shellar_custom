@@ -1,0 +1,10 @@
+#!/bin/sh
+
+ARGS="${@}"
+readonly ARGS
+
+main() {
+    pikkukivi vittu ${ARGS}
+}
+
+main
