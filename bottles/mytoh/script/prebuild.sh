@@ -12,79 +12,83 @@ command_make() {
 }
 
 rebuild_run_deps() {
-    local dir depends p
+    local portsdir dir depends p
     if test ${NARGS} -ge 2
     then
-        dir="/usr/ports/${1}"
+        portsdir="$(make -f /usr/share/mk/bsd.port.mk -V PORTSDIR)"
+        dir="${portsdir}/${1}"
         depends="$(make -C ${dir} run-depends-list)"
 
         for p in ${depends}
         do
-            command_make  -C ${p} clean reinstall clean distclean
+            command_make  -C ${p} clean reinstall clean
         done
     else
         depends="$(make run-depends-list)"
 
         for p in ${depends}
         do
-            command_make  -C ${p} clean reinstall clean distclean
+            command_make  -C ${p} clean reinstall clean
         done
     fi
 }
 
 rebuild_all_deps() {
-    local dir depends p
+    local portsdir dir depends p
 
     if test ${NARGS} -ge 2
     then
-        dir="/usr/ports/${1}"
+        portsdir="$(make -f /usr/share/mk/bsd.port.mk -V PORTSDIR)"
+        dir="${portsdir}/${1}"
         depends="$(make -C ${dir} all-depends-list)"
 
         for p in ${depends}
         do
-            command_make -C ${p} reinstall clean distclean
+            command_make -C ${p} reinstall clean
         done
     else
         depends="$(make all-depends-list)"
 
         for p in ${depends}
         do
-            command_make -C ${p} reinstall clean distclean
+            command_make -C ${p} reinstall clean
         done
 
     fi
 }
 
 rebuild_build_deps() {
-    local dir depends p
+    local portsdir dir depends p
 
     if test ${NARGS} -ge 2
     then
-        dir="/usr/ports/${1}"
+        portsdir="$(make -f /usr/share/mk/bsd.port.mk -V PORTSDIR)"
+        dir="${portsdir}/${1}"
         depends="$(make -C ${dir} build-depends-list)"
 
         for p in ${depends}
         do
-            command_make  -C ${p} reinstall clean distclean
+            command_make  -C ${p} reinstall clean
         done
     else
         depends="$(make build-depends-list)"
 
         for p in ${depends}
         do
-            command_make  -C ${p} reinstall clean distclean
+            command_make  -C ${p} reinstall clean
         done
     fi
 
 }
 
 rebuild_one() {
-    local dir
+    local portsdir dir
     if test ${NARGS} -ge 2
     then
-        dir="/usr/ports/${1}"
+        portsdir="$(make -f /usr/share/mk/bsd.port.mk -V PORTSDIR)"
+        dir="${portsdir}/${1}"
 
-        command_make  -C ${dir} clean reinstall clean distclean
+        command_make  -C ${dir} clean reinstall clean
     else
         command_make clean reinstall clean distclean
     fi

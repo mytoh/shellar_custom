@@ -17,6 +17,7 @@ alias clip-4chan 'xclip -o | xargs dirname | xargs basename'
 alias clip 'xclip -o'
 alias k 'killall -9'
 alias up 'cd ../'
+alias iotop 'top -m io -o total'
 
 if (-X dfc) then
     alias df 'dfc'

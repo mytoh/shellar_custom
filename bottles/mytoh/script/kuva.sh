@@ -10,7 +10,9 @@ open_file() {
     local dir
     dir="$(dirname "${1}")"
 
-    exec feh -Z -F -B black "${dir}"
+    exec sxiv -f -b -r -s f  "${dir}"
+    # exec sxiv -s f -f -b -a -r "${dir}"
+    # exec feh -Z -F -B black "${dir}"
 }
 
 open_dir() {

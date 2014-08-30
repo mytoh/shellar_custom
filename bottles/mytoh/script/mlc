@@ -5,9 +5,9 @@
 main() {
     local mode
     mode=blend
-    if ! $(command mlclient 2>/dev/null)
+    if ! $( mlclient 2>/dev/null)
     then
-        command mlterm --daemon=${mode}
+        mlterm --daemon=${mode}
     fi
 }
 
