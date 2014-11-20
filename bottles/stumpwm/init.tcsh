@@ -1,2 +1,2 @@
 
-set path=(~/.stumpwm.d/modules/stumpish $path)
+set path=(~/.stumpwm.d/modules/util/stumpish $path)
