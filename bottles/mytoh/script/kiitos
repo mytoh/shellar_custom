@@ -14,7 +14,7 @@ main() {
         echo please
         command please ${ARGS}
     else
-        command sudo ${ARGS}
+        command sudo -E ${ARGS}
     fi
 
 }

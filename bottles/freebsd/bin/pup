@@ -4,7 +4,8 @@ ARGS="${@}"
 readonly ARGS
 
 main() {
-    pikkukivi ylilauta ${ARGS}
+    kiitos portsnap fetch update
+    kiitos pkg update
 }
 
 main

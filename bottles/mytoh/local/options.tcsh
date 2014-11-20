@@ -17,6 +17,7 @@ set implicitcd=verbose
 set color
 set colorcat
 set autoexpand
+set autolist
 set complete=Enhance
 set path=(~/.cabal/bin ~/.local/bin ${HOME}/huone/työkaluvaja/bin /usr/local/kde4/{sbin,bin} /usr/local/{sbin,bin} /{sbin,bin} /usr/{sbin,bin} $path)
 set cdpath=(~/huone)
