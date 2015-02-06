@@ -5,7 +5,7 @@ readonly ARGS
 
 main() {
     local e2ansi_path=${HOME}/.emacs.d/vendle/github.com/Lindydancer/e2ansi
-    emacs --batch -l ${e2ansi_path}/e2ansi-silent.el -l ${e2ansi_path}/bin/e2ansi-cat --background-mode dark ${ARGS}
+    emacs --batch -l "${e2ansi_path}"/e2ansi-silent.el -l "${e2ansi_path}"/bin/e2ansi-cat --background-mode dark ${ARGS}
 }
 
 main ${ARGS}
