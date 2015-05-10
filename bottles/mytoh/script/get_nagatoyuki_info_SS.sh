@@ -7,7 +7,7 @@ get_html() {
 
     if ! is_exists "${orig}"
     then
-        printf "get %s\n" ${name}
+        printf "get %s\n" "${name}"
         aria2c --out="${orig}" --quiet=true "http://nagatoyuki.info/?SS%BD%B8%2F${num}"
     fi
 }
@@ -18,11 +18,11 @@ convert_to_org() {
     orig="SS${num}.orig"
     html="SS${num}.html"
 
-    printf "convert %s\n" ${name}
-    nkf -w ${orig} > ${html}
-    rm ${orig}
+    printf "convert %s\n" "${name}"
+    nkf -w "${orig}" > "${html}"
+    rm "${orig}"
 
-    pandoc --standalone --smart --no-wrap -f html -t org ${html} -o SS${num}.org
+    pandoc --standalone --smart --no-wrap -f html -t org "${html}" -o "SS${num}.org"
 }
 
 remove_space() {
@@ -31,10 +31,10 @@ remove_space() {
     org="SS${num}.org"
     sedf="SS${num}.org.seded"
 
-    gsed -E 's/\s+$//g'  ${org} > ${sedf}
+    gsed -E 's/\s+$//g'  "${org}" > "${sedf}"
 
-    rm ${org}
-    mv ${sedf} ${org}
+    rm "${org}"
+    mv "${sedf}" "${org}"
 }
 
 remove_trailing_backslash() {
@@ -43,10 +43,10 @@ remove_trailing_backslash() {
     org="SS${num}.org"
     sedf="SS${num}.org.seded"
 
-    gsed -E 's/[\\][\\]$//g' ${org} > ${sedf}
+    gsed -E 's/[\\][\\]$//g' "${org}" > "${sedf}"
 
-    rm ${org}
-    mv ${sedf} ${org}
+    rm "${org}"
+    mv "${sedf}" "${org}"
 }
 
 remove_tag() {
@@ -54,7 +54,7 @@ remove_tag() {
     num="${1}"
     org="SS${num}.org"
 
-    perl -p -i -0 -e 's/#\+BEGIN_HTML\n.+?\n#\+END_HTML//g' ${org}
+    perl -p -i -0 -e 's/#\+BEGIN_HTML\n.+?\n#\+END_HTML//g' "${org}"
 }
 
 # remove_tag() {
@@ -73,18 +73,18 @@ remove_tag() {
 is_exists() {
     local file
     file="${1}"
-    test -e ${file}
+    test -e "${file}"
 }
 
 main() {
     local num
     for num in $(seq 1 1300)
     do
-        get_html ${num}
-        convert_to_org ${num}
-        #            remove_space ${num}
-        remove_trailing_backslash ${num}
-        remove_tag ${num}
+        get_html "${num}"
+        convert_to_org "${num}"
+        # remove_space "${num}"
+        remove_trailing_backslash "${num}"
+        remove_tag "${num}"
     done
 }
 
