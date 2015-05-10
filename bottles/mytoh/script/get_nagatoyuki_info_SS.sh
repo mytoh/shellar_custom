@@ -22,6 +22,9 @@ convert_to_org() {
     nkf -w "${orig}" > "${html}"
     rm "${orig}"
 
+    # pandoc option memo
+    # --normalize
+    # 入力処理の後に文書を簡素化します：例えば、隣接したStrやEmph要素をマージしたり、 複数繰り返されるSpaceを取り除いたりします。
     pandoc --standalone --smart --no-wrap -f html -t org "${html}" -o "SS${num}.org"
 }
 
