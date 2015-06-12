@@ -88,9 +88,13 @@ rebuild_one() {
         portsdir="$(make -f /usr/share/mk/bsd.port.mk -V PORTSDIR)"
         dir="${portsdir}/${1}"
 
-        command_make  -C ${dir} clean reinstall clean
+        xo "Building {:name}\n" "${1}"
+        command_make  -C "${dir}" clean reinstall clean
     else
-        command_make clean reinstall clean distclean
+        temp_category=$(dirname "${PWD}")
+        category=$(basename "${temp_category}")
+        xo "Building {:category}/{:name}\n" "${category}" $(basename "${PWD}")
+        # command_make clean reinstall clean distclean
     fi
 }
 
