@@ -1,15 +1,21 @@
 #!/bin/sh
 
 main() {
+
     local files IFS
     files=""
     IFS='
 '
 
-    for file in $(dirname ${1})/*
+    for file in $(dirname "${1}")/*
     do
-        files="${files}
+        ext="${file##*.}"
+        case "${ext}" in
+            webm|mp4|wmv|flv|mkv|mov)
+                files="${files}
 ${file}"
+                ;;
+        esac
     done
 
     mpv ${files}
