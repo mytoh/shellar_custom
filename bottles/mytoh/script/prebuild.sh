@@ -94,7 +94,7 @@ rebuild_one() {
         temp_category=$(dirname "${PWD}")
         category=$(basename "${temp_category}")
         xo "Building {:category}/{:name}\n" "${category}" $(basename "${PWD}")
-        # command_make clean reinstall clean distclean
+        command_make clean reinstall clean distclean
     fi
 }
 
