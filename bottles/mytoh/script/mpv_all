@@ -1,0 +1,19 @@
+#!/bin/sh
+
+main() {
+    local files IFS
+    files=""
+    IFS='
+'
+
+    for file in $(dirname ${1})/*
+    do
+        files="${files}
+${file}"
+    done
+
+    mpv ${files}
+}
+
+
+main "${@}"
