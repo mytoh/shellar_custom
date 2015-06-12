@@ -4,8 +4,7 @@ main() {
 
     local files IFS
     files=""
-    IFS='
-'
+    IFS="$(printf '\n+')"
 
     for file in $(dirname "${1}")/*
     do
