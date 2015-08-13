@@ -8,6 +8,8 @@ readonly ARGS
 PROGNAME="$(basename $0)"
 readonly PROGNAME
 
+MKVMERGECMD="env LD_LIBRARY_PATH=/usr/local/lib/gcc5 mkvmerge"
+
 log()
 {
     local message="${1}"
@@ -31,8 +33,8 @@ mkv_to_mkv() {
 
     log "converting ${1}"
 
-    mkvmerge -o "${_temp}" "${_orig}" && \
-    move "${_temp}" "${_new%.*}.mkv"
+    ${MKVMERGECMD} -o "${_temp}" "${_orig}" && \
+        move "${_temp}" "${_new%.*}.mkv"
 }
 
 vid_to_mkv() {
@@ -45,9 +47,9 @@ vid_to_mkv() {
     log "converting ${1}"
 
     ffmpeg -i  "${_orig}" -codec:v copy -codec:a copy  "${_temp}" && \
-    mkvmerge -o "${_temp2}" "${_temp}"  && \
-    remove "${_temp}"  && \
-    move "${_temp2}" "${_new}"
+        ${MKVMERGECMD} -o "${_temp2}" "${_temp}"  && \
+        remove "${_temp}"  && \
+        move "${_temp2}" "${_new}"
 }
 
 remove() {
