@@ -1,4 +1,5 @@
 #!/bin/sh
 
 # conkeror -P tor -q -batch -e "user_pref('conkeror.rcfile', '/home/foo/conkerorrc.tor');"
+# conkeror -P tor -q -batch -e "user_pref('conkeror.rcfile', get_home_directory().append(".conkerorrc.tor").path);"
 conkeror -no-remote -P tor

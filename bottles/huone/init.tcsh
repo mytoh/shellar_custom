@@ -1,0 +1,2 @@
+
+setenv HUONE ${HOME}/huone
