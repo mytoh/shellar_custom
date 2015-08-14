@@ -1,0 +1,107 @@
+#!/usr/bin/env runemacs
+;; -*- mode:emacs-lisp; lexical-binding: t; -*-
+
+(require 'cl-lib)
+
+(cl-defun main ()
+
+  (cl-letf ((default-directory (file-name-as-directory
+                                (expand-file-name
+                                 "~/huone/git/git.savannah.gnu.org/emacs"))))
+    (message "change directory to emcas source directory")
+    (message (shell-command-to-string "pwd"))
+
+    (message "git pull")
+    (message (shell-command-to-string "git pull" ))
+
+    (message "clean")
+    (message (shell-command-to-string "gmake clean distclean"))
+
+    (message "autogen")
+    ;; (message (shell-command-to-string "./autogen.sh"))
+    (cl-letf ((process (start-process-shell-command
+                        "build" "*build*" "./autogen.sh")))
+      (set-process-filter process
+                          (lambda (p output)
+                            (message output)))
+      (accept-process-output process)
+      )
+
+    (message "configure")
+    (cl-letf ((process (make-process
+                        :name "build"
+                        :buffer "*build*"
+                        :command (list "./configure")
+                        :filter (lambda (p output)
+                                  (message output)))))
+      (accept-process-output process)
+      )
+
+    ))
+
+(cl-defun test-proc ()
+  (accept-process-output
+   (make-process
+    :name "test-proc"
+    :buffer "*test-proc*"
+    :command (list "ls" "-a" "/home/mytoh")
+    :filter
+    (lambda (p output)
+      (print output))
+    :sentinel
+    (lambda (p e)
+      (when (string-match "^finished" e)
+        (message "finished")
+        (message (with-current-buffer (process-buffer p)
+                   (buffer-substring (point-min) (point-max)))))))))
+(test-proc)
+
+
+;; (cl-letf* ((clang-devel "CC=clang-devel")
+;;            (clang35 "CC=clang35")
+;;            (gcc "CC=gcc6")
+;;            (compiler clang35)
+;;            (cairo "--without-cairo")
+;;            (xwidgets "--with-xwidgets")
+;;            (x-gtk3 "--with-x-toolkit=gtk3")
+;;            (x-no  "--with-x-toolkit=no")
+;;            (x-motif  "--with-x-toolkit=motif")
+;;            (x-athena  "--with-x-toolkit=athena")
+;;            (x-xaw3d  "--with-x-toolkit=athena --without-xaw3d")
+;;            (xtoolkit x-no)
+;;            (cflags "CFLAGS=\"-O2 -pipe -fstack-protector -fno-strict-aliasing\"")
+;;            (build-emacs-configure-options
+;;             (list
+;;              "--prefix=/home/mytoh/huone/ohjelmat/emacs"
+;;              "--disable-acl"
+;;              "--with-sound=oss"
+;;              xwidgets
+;;              xtoolkit
+;;              cairo
+;;              "--with-wide-int"
+;;              "--with-file-notification=gfile"
+;;              "--enable-link-time-optimization"
+;;              "--enable-silent-rules"
+;;              "--without-compress-install"
+;;              "--without-toolkit-scroll-bars"
+;;              "--without-xim"
+;;              "--without-gconf"
+;;              "--without-gsettings"
+;;              compiler
+;;              cflags
+;;              "MAKE=gmake")))
+;;   (muki:eshell-define-build-alias
+;;    :alias "build-emacs"
+;;    :repo "git.savannah.gnu.org/emacs"
+;;    :commands
+;;    `("gpl; gmake clean distclean; ./autogen.sh ;"
+;;      "./configure "
+;;      ,@build-emacs-configure-options
+;;      "; gmake V=0 --silent && gmake install; gmake clean distclean"))
+;;   (eshellar:add-alias "build-emacs-bootstrap"
+;;                       (string-join
+;;                        `("cde; gpl; gmake clean distclean; ./autogen.sh ;"
+;;                          "./configure"
+;;                          ,@build-emacs-configure-options
+;;                          "; gmake V=0 bootstrap && gmake install; gmake clean distclean")
+;;                        " ")))
