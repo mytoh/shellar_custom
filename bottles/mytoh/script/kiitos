@@ -4,17 +4,18 @@ ARGS="${@}"
 readonly ARGS
 
 require_please() {
-    command which -s "please"
+    which please
 }
 
 main() {
 
-    if test $(require_please)
+    require_please 1> /dev/null
+    if test 0 -eq $?
     then
-        echo please
-        command please ${ARGS}
+        echo using please instead of sudo
+        please ${ARGS}
     else
-        command sudo -E ${ARGS}
+        sudo -E ${ARGS}
     fi
 
 }
