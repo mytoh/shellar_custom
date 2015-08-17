@@ -2,8 +2,9 @@
 ;; -*- mode:emacs-lisp; lexical-binding: t; -*-
 
 (require 'cl-lib)
+(require 'subr-x)
 
-(cl-defun main ()
+(cl-defun main-old ()
 
   (cl-letf ((default-directory (file-name-as-directory
                                 (expand-file-name
@@ -34,28 +35,27 @@
                         :command (list "./configure")
                         :filter (lambda (p output)
                                   (message output)))))
-      (accept-process-output process)
-      )
+      (accept-process-output process))))
 
-    ))
+(cl-defun process-with-output (&key ((:command cmd)) name)
+  (cl-letf ((process-adaptive-read-buffering nil)
+            (process (apply #'start-process
+                            name "*build-emacs*"
+                            (car cmd) (cdr cmd))))
+    (set-process-filter process
+                        (lambda (p output)
+                          (unless (string-empty-p output)
+                            (princ output))))
+    (accept-process-output process)))
 
-(cl-defun test-proc ()
-  (accept-process-output
-   (make-process
-    :name "test-proc"
-    :buffer "*test-proc*"
-    :command (list "ls" "-a" "/home/mytoh")
-    :filter
-    (lambda (p output)
-      (print output))
-    :sentinel
-    (lambda (p e)
-      (when (string-match "^finished" e)
-        (message "finished")
-        (message (with-current-buffer (process-buffer p)
-                   (buffer-substring (point-min) (point-max)))))))))
-(test-proc)
+(cl-defun main ()
+  (cl-letf ((default-directory (file-name-as-directory
+                                (expand-file-name
+                                 "~/huone/git/git.savannah.gnu.org/emacs"))))
+    (process-with-output :name "pwd"
+                         :command '("pwd"))))
 
+(main)
 
 ;; (cl-letf* ((clang-devel "CC=clang-devel")
 ;;            (clang35 "CC=clang35")
