@@ -110,7 +110,7 @@
                                user-emacs-directory)))
     (hoarder:initialize muki:hoarder-directory))
 
-  (load "~/.emacs.d/init.d/layer/package/register/init.el")
+  (load "~/.emacs.d/init.d/layer/package-manager/register/init.el")
 
   (pcase (car argv)
     ("update"
