@@ -10,7 +10,7 @@ main() {
     do
         ext="${file##*.}"
         case "${ext}" in
-            webm|mp4|wmv|flv|mkv|mov)
+            webm|mp4|wmv|flv|mkv|mov|gif)
                 files="${files}
 ${file}"
                 ;;
