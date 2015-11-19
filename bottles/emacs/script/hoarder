@@ -126,8 +126,6 @@
 
 (main)
 
-;; (output "fuck %s\n" "test")
-
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
