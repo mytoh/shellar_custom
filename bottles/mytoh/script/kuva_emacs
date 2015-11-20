@@ -1,0 +1,35 @@
+#!/usr/bin/env runemacs
+;; lexical-binding: t;
+
+(require 'cl-lib)
+(require 'subr-x)
+
+(cl-defun image-program ()
+  (executable-find "feh"))
+
+(cl-defun open-file (file)
+  (cl-letf ((dir (file-name-directory file))
+            (prog (image-program)))
+    (call-process
+     prog nil nil nil "-Z" "-F" "-B black" dir)))
+
+(cl-defun open-directory (dir)
+  (cl-letf ((prog (image-program)))
+    (call-process
+     prog nil nil nil "-Z" "-F" "-B black" dir)))
+
+(cl-defun open (file)
+  (pcase file
+    ((pred file-regular-p)
+     (open-file file))
+    ((pred file-directory-p)
+     (open-directory file))))
+
+(cl-defun main ()
+  (open (car argv)))
+
+(main)
+
+;; Local Variables:
+;; mode: emacs-lisp
+;; End:
