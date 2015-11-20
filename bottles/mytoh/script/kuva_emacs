@@ -4,6 +4,9 @@
 (require 'cl-lib)
 (require 'subr-x)
 
+(cl-defun enable-debbuger ()
+  (setq debug-on-error t))
+
 (cl-defun image-program ()
   (executable-find "feh"))
 
@@ -26,9 +29,10 @@
      (open-directory file))))
 
 (cl-defun main ()
-  (open (car argv)))
+  (open (car argv))
   (kill-emacs 0))
 
+(enable-debbuger)
 (main)
 
 ;; Local Variables:
