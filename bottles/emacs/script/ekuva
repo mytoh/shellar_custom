@@ -32,7 +32,7 @@
   (open (car argv))
   (kill-emacs 0))
 
-(enable-debbuger)
+;; (enable-debbuger)
 (main)
 
 ;; Local Variables:
