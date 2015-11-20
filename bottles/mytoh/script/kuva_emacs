@@ -27,6 +27,7 @@
 
 (cl-defun main ()
   (open (car argv)))
+  (kill-emacs 0))
 
 (main)
 
