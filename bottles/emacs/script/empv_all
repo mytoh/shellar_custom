@@ -1,0 +1,37 @@
+#!/usr/bin/env runemacs
+;; lexical-binding: t;
+
+(require 'cl-lib)
+(require 'subr-x)
+(require 'seq)
+
+(cl-defun enable-debbuger ()
+  (setq debug-on-error t))
+
+(cl-defun open (file)
+  (cl-letf* ((dir (if (file-directory-p file)
+                      file
+                    (file-name-directory file)))
+             (all-files (directory-files dir 'full)))
+    (open-mpv
+     (seq-filter
+      (lambda (f)
+        (pcase (file-name-extension f)
+          ((or "webm" "mp4" "wmv" "flv" "mkv" "mov" "gif")
+           t)))
+      all-files))))
+
+(cl-defun open-mpv (files)
+  (apply #'call-process "mpv" nil nil nil
+         files))
+
+(cl-defun main (arg)
+  (open arg)
+  (kill-emacs 0))
+
+;; (enable-debbuger)
+(main (car argv))
+
+;; Local Variables:
+;; mode: emacs-lisp
+;; End:
