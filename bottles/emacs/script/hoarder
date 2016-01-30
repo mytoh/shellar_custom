@@ -8,6 +8,7 @@
 (require 'cl-generic)
 
 (add-to-list 'load-path (expand-file-name "~/huone/ateljee/emacs-glof"))
+(add-to-list 'load-path (expand-file-name "~/huone/ateljee/emacs-colle"))
 (add-to-list 'load-path (expand-file-name "~/huone/ateljee/emacs-hoarder"))
 (require 'hoarder)
 
@@ -55,14 +56,13 @@
         (cl-letf* ((proc-buf (get-buffer-create (format "hoarder-git-%s" (glof:get package :origin))))
                    (proc-name (format "hoarder-git-pull-%s" (glof:get package :origin))))
           (cl-labels ((sentinel-cb (process signal)
-                        (message signal)
                         (cond
                           ((equal signal "finished\n")
                            (cl-letf ((result (with-current-buffer (process-buffer process)
                                                (buffer-substring (point-min) (point-max)))))
                              (hoarder:message "updated package %s" name)
-                             (cond
-                               ((hoarder:git-updatedp result)
+                             (pcase result
+                               ((pred hoarder:git-updatedp)
                                 (hoarder:message "compiling package %s" name)
                                 ;; (hoarder:message "result: %s" result)
                                 (when (glof:get package :compile)
@@ -70,6 +70,8 @@
                                 (hoarder:option-build package)))
                              (kill-buffer (process-buffer process))))
                           (t
+                           (message name)
+                           (message (glof:get package :path))
                            (message "got signal %s" signal)
                            (display-buffer (process-buffer process))))))
             (make-process
@@ -95,9 +97,8 @@
 (cl-defun hoarder-async-update-make-process ()
   (interactive)
   (cl-letf ((pkgs
-             ;; (seq-partition *hoarder-package-list* 2)
              (seq-partition
-              ;; (seq-take hoarder:*packages* 10)
+              ;; (seq-take hoarder:*packages* 20)
               hoarder:*packages*
               4)))
     (seq-each
@@ -110,7 +111,7 @@
 
 (defun main ()
   (cl-letf ((muki:hoarder-directory
-             (expand-file-name (file-name-as-directory "hoarder")
+             (expand-file-name (file-name-as-directory "vendor")
                                user-emacs-directory)))
     (hoarder:initialize muki:hoarder-directory))
 

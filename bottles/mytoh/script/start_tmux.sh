@@ -26,7 +26,6 @@ session::remote() {
     window="sdf"
 
     command tmux new-session -s ${session} -n ${window} -d 'dbclient -K 30 sdf.org' \; set-window-option -q -t :0 remain-on-exit on
-    command tmux detach -s ${session}
 }
 
 session::daemon() {
@@ -36,7 +35,6 @@ session::daemon() {
     window="futaba"
 
     command tmux new-session -s ${session} -n ${window} -d 'cd huone/kuvat/sivusto/futaba/b' \; set-window-option -q -t :0 remain-on-exit on
-    command tmux detach -s ${session}
 }
 
 session::stats() {
@@ -46,7 +44,6 @@ session::stats() {
     window="top"
 
     command tmux new-session -s ${session} -n ${window} -d 'top' \; set-window-option -q -t :0 remain-on-exit on
-    command tmux detach -s ${session}
 }
 
 session::jail() {
@@ -56,7 +53,6 @@ session::jail() {
     window="jail"
 
     command tmux new-session -s ${session} -n ${window} -d 'mosh peca@192.168.1.21' \; set-window-option -q -t :0 remain-on-exit on
-    command tmux detach -s ${session}
 }
 
 
