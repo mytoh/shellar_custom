@@ -36,11 +36,24 @@ rename_file() {
     mv "${origname}" "${toname}.torrent"
 }
 
+get_links_html() {
+    local part p
+    part=$(curl ${1} \
+               | tr ">" "\n" \
+               | grep --only-matching -E '[^\"][a-z./?=&#]+=download&#38;tid=[^\"]+' \
+               | sed 's/#38;//g')
+    for p in ${part}
+    do
+        echo "http:${p}"
+    done
+
+}
+
 main() {
-    for i in "${@}"
+    for i in $(get_links_html ${1})
     do
         get_file "${i}"
     done
 }
 
-main "${@}"
+main ${1}
