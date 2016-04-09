@@ -51,7 +51,7 @@ main() {
                 gunzip "${file}"
                 ;;
             *.zip)
-                unzip "${file}"
+                7z x "${file}"
                 ;;
             *.Z)
                 uncompress "${file}"
