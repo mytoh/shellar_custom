@@ -29,11 +29,23 @@ rename_file() {
     id="${1}"
     origname="${id}.torrent"
     tname=$(aria2c --show-files "${origname}" | grep Name | sed -E 's/Name: (.*)/\1/g')
-    toname="${id}_${tname}"
+    toname=$(shorten_file_name "${id}_${tname}" )
 
     xo "{:name}\n" "${toname}"
 
-    mv "${origname}" "${toname}.torrent"
+    mv -fv "${origname}" "${toname}.torrent"
+}
+
+shorten_file_name() {
+    local origname
+    origname="${1}"
+
+    if [ ${#origname} -gt 100 ]
+    then
+        echo "${origname}" |  tr -d '[:space:]'
+    else
+        echo "${origname}"
+    fi
 }
 
 get_links_html() {
