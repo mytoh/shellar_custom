@@ -1,0 +1,2 @@
+
+ setenv EMACSLOADPATH ~/.config/herd:
