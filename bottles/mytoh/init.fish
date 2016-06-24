@@ -3,7 +3,7 @@
 
 ulimit -c 0
 
-shellar.push_to_path {$HOME}/huone/työkaluvaja/bin
+shellar.push_to_path {$HOME}/huone/komero/bin
 shellar.push_to_path {$HOME}/.bin
 shellar.register_paths {$HOME}/.config/fish
 
