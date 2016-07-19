@@ -1,0 +1,5 @@
+#!/bin/sh
+
+EMACS="xwidget-emacs"
+
+${EMACS} --no-init-file -l ~/.emacs.d/init-xwidget.el --name xwidget-emacs
