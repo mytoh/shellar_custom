@@ -19,5 +19,7 @@ if ( "${OSTYPE}" == "FreeBSD" ) then
     if ( -X pkg_replace ) then
         alias prep sudo pkg_replace
     endif
+    
+setenv TZ Asia/Tokyo
 
 endif

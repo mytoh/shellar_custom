@@ -8,8 +8,6 @@ readonly PROGDIR=$(readlink $(dirname $0))
 # readonly ARGS="${@}"
 readonly NARGS="${#}"
 
-# http://sukebei.nyaa.se/?page=download&tid=1127698
-
 get_file() {
     local url id
     url="${1}"

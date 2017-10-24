@@ -90,4 +90,4 @@ main() {
     fi
 }
 
-main ${ARGS}
+main "${1}" "${2}"

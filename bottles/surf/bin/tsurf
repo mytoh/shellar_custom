@@ -1,0 +1,9 @@
+#!/bin/sh
+# tabbed -c surf -e
+
+if $(builtin command -v tabbed > /dev/null)
+then
+    tabbed -c surf -e
+else
+    surf
+fi
