@@ -19,7 +19,7 @@ my sub yotsuba ($dir) {
 my sub main ($dirs) {
   while (1) {
 
-    foreach my $i (@{$dirs}) {
+    foreach my $i ($dirs->@*) {
       say $i;
       yotsuba $i;
     }
@@ -30,5 +30,5 @@ my sub main ($dirs) {
 
 }
 
-my @targets = qw(trash w wg g);
-main( \@targets);
+my $targets = [qw(trash w wg g)];
+main( $targets);
