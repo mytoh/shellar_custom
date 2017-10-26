@@ -10,10 +10,13 @@ use experimental qw(smartmatch signatures);
 
 my sub print_modules ($args) {
   my $cpan = $args->[0] // 'default';
-  if ($cpan eq 'cpanfile') {
-    say "requires '$_';" for ExtUtils::Installed->new->modules;
-  } elsif ($cpan eq 'default') {
-    say  "$_" for ExtUtils::Installed->new->modules;
+  given ($args->[0]) {
+    when ('cpanfile') {
+      say "requires '$_';" for ExtUtils::Installed->new->modules;
+    }
+    default {
+      say  "$_" for ExtUtils::Installed->new->modules;
+    }
   }
 }
 
