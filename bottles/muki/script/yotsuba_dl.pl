@@ -3,11 +3,12 @@
 use strict;
 use warnings;
 use utf8;
+use feature ":5.28";
 use File::chdir;
 use File::HomeDir;
 use File::Spec::Functions;
-use feature qw/say switch signatures/;
-use experimental qw(switch  signatures);
+use feature qw/signatures/;
+use experimental qw(smartmatch  signatures);
 
 my sub yotsuba ($dir) {
   my @children = qw(huone kuvat sivusto 4chan);

@@ -3,9 +3,10 @@
 use strict;
 use warnings;
 use utf8;
+use feature ":5.28";
 use ExtUtils::Installed;
-use feature qw(say signatures);
-use experimental qw(signatures);
+use feature qw(signatures);
+use experimental qw(smartmatch signatures);
 
 my sub print_modules ($args) {
   my $cpan = $args->[0] // 'default';
