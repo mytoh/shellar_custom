@@ -5,7 +5,6 @@ use warnings;
 use utf8;
 use feature ":5.28";
 use ExtUtils::Installed;
-use feature qw(signatures);
 use experimental qw(smartmatch signatures);
 
 my sub print_modules ($args) {
