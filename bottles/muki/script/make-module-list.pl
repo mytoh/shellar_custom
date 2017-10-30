@@ -8,8 +8,8 @@ use ExtUtils::Installed;
 use experimental qw(signatures);
 
 my sub print_modules ($args) {
-  my $cpan = $args->[0] // 'default';
-  if ($args->[0] eq 'cpanfile') {
+  my $cpan = $args->[0] // '';
+  if ($cpan eq 'cpanfile') {
     say "requires '$_';" for ExtUtils::Installed->new->modules;
   } else {
     say  "$_" for ExtUtils::Installed->new->modules;
