@@ -5,17 +5,14 @@ use warnings;
 use utf8;
 use feature ":5.28";
 use ExtUtils::Installed;
-use experimental qw(smartmatch signatures);
+use experimental qw(signatures);
 
 my sub print_modules ($args) {
   my $cpan = $args->[0] // 'default';
-  given ($args->[0]) {
-    when ('cpanfile') {
-      say "requires '$_';" for ExtUtils::Installed->new->modules;
-    }
-    default {
-      say  "$_" for ExtUtils::Installed->new->modules;
-    }
+  if ($args->[0] eq 'cpanfile') {
+    say "requires '$_';" for ExtUtils::Installed->new->modules;
+  } else {
+    say  "$_" for ExtUtils::Installed->new->modules;
   }
 }
 
