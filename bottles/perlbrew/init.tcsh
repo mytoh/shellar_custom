@@ -7,7 +7,7 @@
 # Append the following piece of code to the end of your ~/.tcshrc and start a
 # new shell, perlbrew should be up and fully functional from there:
 
-# perlbrew  install --notest --64int --thread --clang --ld --multi blead
+# perlbrew  install --notest --64int --thread --clang --ld --multi -D useshrplib blead
 # perlbrew  switch blead
 # perlbrew lib create dev
 # perlbrew switch perl-blead@dev 
