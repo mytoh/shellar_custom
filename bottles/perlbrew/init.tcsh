@@ -18,3 +18,5 @@ endif
 
 
 alias pb perlbrew
+alias pb-blead "pb uninstall perl-blead ; dk build:blead ; pb switch blead@dev ; cpanm Daiku ; dk cpm:dotperl; dk cpm:global ; dk 'cpm:cpanfile[time reply critics app]'"
+alias pb-latest "pb uninstall perl-latest ; dk build:latest ; pb switch latest@dev ; cpanm Daiku ; dk cpm:dotperl; dk cpm:global ; dk 'cpm:cpanfile[time reply critics app]'"

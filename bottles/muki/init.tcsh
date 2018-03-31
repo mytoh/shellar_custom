@@ -1,7 +1,7 @@
 
    ## environment
-    setenv LANG fi_FI.UTF-8
-    setenv LC_ALL fi_FI.UTF-8
+    setenv LANG en_US.UTF-8
+    setenv LC_ALL en_US.UTF-8
     setenv EDITOR vim
     setenv FTP_PASSIVE_MODE true
     setenv MYVIMRC ~/.vimrc
