@@ -32,4 +32,10 @@ alias ce 'carton update'
 alias dk "daiku -f ~/Daikufile "
 
 # [[https://boards.4chan.org/g/thread/65052204][/g/ - The logical conclusion to programming. - Technology - 4chan]]
-alias ips 'rlwrap -A -pcyan -S "perl> " perl -wnE '\''say eval()//$@'\'
+#alias ips 'rlwrap -A -pcyan -S "perl> " perl -wnE '\''say eval()//$@'\'
+
+
+ if ( -X diffwc ) then
+ alias diff diffwc
+complete diffwc 'p/*/`diffwc`/'
+ endif
